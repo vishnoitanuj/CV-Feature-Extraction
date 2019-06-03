@@ -6,8 +6,8 @@ import numpy as np
 import json, codecs
 
 wd = os.getcwd()
-full_img_path = wd + '/MSD/images/full'
-crop_img_path = wd + '/MSD/images/crops'
+full_img_path = wd + '/MSD/sample_testset/images'
+crop_img_path = wd + '/MSD/sample_testset/crops'
 
 def get_features_all_crops():
     training = []
@@ -55,7 +55,7 @@ if __name__ == "__main__":
                 continue
             matches = feature_matcher(tdesp, desp)
             dst,f = remove_outiners(matches, tkpts, kpts, size)
-            if f == 0:
+            if f==0:
                 t[4]=1
                 data = get_coordinates(tf, dst)
                 name = os.path.splitext(filename)[0]
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     # print(all_data)
 
 
-    with open('final_data.json', 'wb') as f:
+    with open('sampletest_data.json', 'wb') as f:
         json.dump(all_data, codecs.getwriter('utf-8')(f), ensure_ascii=False, indent=4)
 
 

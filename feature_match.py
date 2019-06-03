@@ -7,7 +7,7 @@ import numpy as np
 def orb(gray):
     # Set the parameters of the ORB algorithm by specifying the maximum number of keypoints to locate and
     # the pyramid decimation ratio
-    orb = cv2.ORB_create(5000)
+    orb = cv2.ORB_create(nfeatures=1000, scaleFactor=1.5)
     # Find the keypoints in the gray scale training and query images and compute their ORB descriptor.
     # The None parameter is needed to indicate that we are not using a mask in either case.  
     kpt,desp = orb.detectAndCompute(gray, None)
@@ -51,11 +51,12 @@ def remove_outiners(matches, keypoints_train, keypoints_query, size):
         area = cv2.contourArea(dst)
         original_area = h*w
 
-        if abs(original_area-area)>1000:
-            return dst, -1
-
-
-        return dst,0
+        box = [np.int32(dst)][0].reshape(-1,2)
+        for i,j in box:
+            if i<0 or j<0:
+                return dst, -1
+        else:
+            return dst,0
 
     else:
         return dst, -1
