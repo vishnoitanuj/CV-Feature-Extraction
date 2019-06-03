@@ -6,8 +6,8 @@ import numpy as np
 import json, codecs
 
 wd = os.getcwd()
-full_img_path = wd + '/MSD/sample_testset/images'
-crop_img_path = wd + '/MSD/sample_testset/crops'
+full_img_path = wd + '/MSD/images/full'
+crop_img_path = wd + '/MSD/images/crops'
 
 def get_features_all_crops():
     training = []
@@ -16,7 +16,7 @@ def get_features_all_crops():
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         size = gray.shape
         keypoints, descriptors = orb(gray)
-        data = [filename, keypoints, descriptors, size, 0]
+        data = [filename, keypoints, descriptors, size, -1]
         training.append(data)
     return training
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
         print(filename)
         if len(kpts)<10:
             name = os.path.splitext(filename)[0]
-            data = [name, []]
+            data = [[]]
             all_data[name] = data
             continue
         for t in training:
@@ -54,8 +54,9 @@ if __name__ == "__main__":
                 c=-1
                 continue
             matches = feature_matcher(tdesp, desp)
-            dst = remove_outiners(matches, tkpts, kpts, size)
-            if dst.size !=0:
+            dst,f = remove_outiners(matches, tkpts, kpts, size)
+            if f == 0:
+                t[4]=1
                 data = get_coordinates(tf, dst)
                 name = os.path.splitext(filename)[0]
                 if name in all_data:
@@ -69,14 +70,15 @@ if __name__ == "__main__":
         c = t[4]
         if c==-1:
             name = os.path.splitext(tf)[0]
-            data = [name, []]
+            data = [name]
             if 'na' in all_data:
                     all_data['na'].append(data)
             else:
                 all_data['na'] = data
+    # print(all_data)
+
 
     with open('final_data.json', 'wb') as f:
         json.dump(all_data, codecs.getwriter('utf-8')(f), ensure_ascii=False, indent=4)
-
 
 

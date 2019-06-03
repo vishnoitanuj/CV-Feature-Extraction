@@ -32,7 +32,7 @@ def remove_outiners(matches, keypoints_train, keypoints_query, size):
 
     dst = np.empty( shape=(0, 0) )
     #minimum matches for sustainability of a object recognition
-    MIN_MATCH_COUNT = 10
+    MIN_MATCH_COUNT = 25
     
     if len(matches)>MIN_MATCH_COUNT:
         
@@ -44,10 +44,21 @@ def remove_outiners(matches, keypoints_train, keypoints_query, size):
         matchesMask = mask.ravel().tolist()
 
         h,w = size
+        
         pts = np.float32([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ]).reshape(-1,1,2)
         dst = cv2.perspectiveTransform(pts,M)
 
-    return dst
+        area = cv2.contourArea(dst)
+        original_area = h*w
+
+        if abs(original_area-area)>1000:
+            return dst, -1
+
+
+        return dst,0
+
+    else:
+        return dst, -1
 
 def get_coordinates(filename, dst):
     box = [np.int32(dst)][0].reshape(-1,2)
@@ -55,6 +66,6 @@ def get_coordinates(filename, dst):
     x2,y2=box[2]
     data = []
     name = os.path.splitext(filename)[0]
-    data = [filename,[x1, y1, x2, y2]]
+    data = [name,[str(x1), str(y1), str(x2), str(y2)]]
 
     return data
