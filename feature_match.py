@@ -7,8 +7,7 @@ import numpy as np
 def orb(gray):
     # Set the parameters of the ORB algorithm by specifying the maximum number of keypoints to locate and
     # the pyramid decimation ratio
-    orb = cv2.ORB_create(nfeatures=1000, scaleFactor=1.5)
-    # Find the keypoints in the gray scale training and query images and compute their ORB descriptor.
+    orb = cv2.ORB_create(nfeatures=1000, scaleFactor=1.5)    # Find the keypoints in the gray scale training and query images and compute their ORB descriptor.
     # The None parameter is needed to indicate that we are not using a mask in either case.  
     kpt,desp = orb.detectAndCompute(gray, None)
 
@@ -16,6 +15,7 @@ def orb(gray):
 
 
 def feature_matcher(descriptors_train, descriptors_query):
+    matches=0
     # Create a Brute Force Matcher object. "crossCheck"  is set to True so that the BFMatcher will only return consistent
     # pairs. Such technique usually produces best results with minimal number of outliers when there are enough matches.
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck = True)
@@ -51,12 +51,16 @@ def remove_outiners(matches, keypoints_train, keypoints_query, size):
         area = cv2.contourArea(dst)
         original_area = h*w
 
-        box = [np.int32(dst)][0].reshape(-1,2)
-        for i,j in box:
-            if i<0 or j<0:
-                return dst, -1
-        else:
-            return dst,0
+        if abs(area-original_area)>500:
+            return dst, -1
+
+        # box = [np.int32(dst)][0].reshape(-1,2)
+        # for i,j in box:
+        #     if i<0 or j<0:
+        #         return dst, -1
+        # else:
+        #     return dst,0
+        return dst, 0
 
     else:
         return dst, -1
