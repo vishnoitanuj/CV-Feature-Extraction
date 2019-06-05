@@ -10,7 +10,7 @@ Major advantages of the ORB:
 
 ## The final json is contained in file <a href="https://github.com/vishnoitanuj/CV-Feature-Extraction/blob/master/final_data.json">final_data.json</a>
 
-![objective](./images/objective.png)
+![objective](./images/objective.png =100x)
 
 ## Installing requirements.
  1) python version 3.5.1
