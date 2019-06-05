@@ -81,7 +81,7 @@ if __name__ == "__main__":
     # print(all_data)
 
 
-    with open('final2.json', 'wb') as f:
+    with open('final_data.json', 'wb') as f:
         json.dump(all_data, codecs.getwriter('utf-8')(f), ensure_ascii=False, indent=4)
 
 
