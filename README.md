@@ -10,7 +10,7 @@ Major advantages of the ORB:
 
 ## The final json is contained in file <a href="https://github.com/vishnoitanuj/CV-Feature-Extraction/blob/master/final_data.json">final_data.json</a>
 
-![matcher](images/MadStreetDen Report.png)
+![objective](./images/objective.png)
 
 ## Installing requirements.
  1) python version 3.5.1
@@ -27,6 +27,8 @@ Major advantages of the ORB:
  For step wise understanding the ORB code please check: <a href="https://github.com/vishnoitanuj/CV-Feature-Extraction/blob/master/ORB-%20Feature%20Matcher.ipynb">ORB- Feature Matcher</a>
 
  So just run the file to get the output as final_data.json
+
+ ![objective](./images/matches.png)
 
 ## Code details
  The algorithm is majorly implemented in file <a href="https://github.com/vishnoitanuj/CV-Feature-Extraction/blob/master/feature_match.py">feature_match.py</a>, which contain the feature matching orb algorithm and also the outlier removal code.
