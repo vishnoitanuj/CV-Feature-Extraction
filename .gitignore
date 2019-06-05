@@ -5,3 +5,6 @@ share/*
 etc/*
 test_images/*
 home/*
+__pycache__
+.ipynb_checkpoints/*
+.vscode/*
