@@ -53,7 +53,9 @@ def remove_outiners(matches, keypoints_train, keypoints_query, size):
 
         if abs(area-original_area)>500:
             return dst, -1
-
+        '''
+        for modified final2.json, uncomment the following code (Ref: Report)
+        '''
         # box = [np.int32(dst)][0].reshape(-1,2)
         # for i,j in box:
         #     if i<0 or j<0:

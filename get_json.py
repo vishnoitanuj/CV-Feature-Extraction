@@ -31,11 +31,6 @@ def get_features_all_fulls():
         query.append(data)
     return query
 
-# training = get_features_all_crops()
-# x,y,z = training[0]
-# print(x)
-# def get_coordinates():
-
 all_data = {}
 if __name__ == "__main__":
     training = get_features_all_crops()
